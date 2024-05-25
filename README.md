@@ -9,4 +9,5 @@ pip install langchain
 pip install zhipuai
 pip install joblib
 pip install loguru
+pip install baostock
 ```

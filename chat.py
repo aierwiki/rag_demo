@@ -82,30 +82,61 @@ def check_and_execute_action_code(msg:str) -> str:
     """
     if "def action()" not in msg:
         return None
-    code_pattern = r'```(?:python)?.*(def action.*?)\s*```'
+    code_pattern = r'```(?:python\n)?(.*def action.*?)```'
     match = re.search(code_pattern, msg, re.DOTALL)
     if match is None:
         logger.error(f"No python code found in the message. {msg}")
         return None
     code = match.group(1)
-    # code = "import baostock as bs\nfrom baostock import query_history_k_data_plus\nimport pandas as pd\nlg = bs.login()\n" + code
+    logger.info(f"Extracted code: ```\n{code}\n```")
     global_vars = {**GLOBAL_FUNCS}
-    exec(code, global_vars)
-    info = global_vars['action']()
-    prompt = f"执行action()获取到的信息如下：{info}"
+    try:
+        exec(code, global_vars)
+        info = global_vars['action']()
+        prompt = f"执行action()获取到的信息如下：{info}"
+    except Exception as e:
+        logger.error(f"Failed to execute the action code. {e}")
+        prompt = f"执行action()时出错：{e}"
     return prompt
 
 def test_execute_action_code():
     msg = """
     请帮我执行如下代码：
     ```python
-    from datetime import datetime
-    def action() -> str:
-        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+import datetime
+def action() -> str:
+    return str(datetime.datetime.now())
     ```
     """
+    code = """
+import datetime
+def action() -> str:
+    return str(datetime.datetime.now())
+        """
     result = check_and_execute_action_code(msg)
     print(result)
+
+
+def is_code_prefix(msg:str) -> bool:
+    code_prefix = "请帮助我执行如下代码"
+    if len(code_prefix) <= len(msg):
+        return False
+    min_len = min(len(code_prefix), len(msg))
+    return code_prefix[:min_len] == msg[:min_len]
+
+def is_code(msg:str) -> bool:
+    code_prefix = "请帮助我执行如下代码"
+    if len(code_prefix) <= len(msg):
+        return code_prefix == msg[:len(code_prefix)]
+    return False
+    
+def get_process_bar(stage:int) -> str:
+    stage = min(stage, 9)
+    bar_list = ['_'] * 10
+    for i in range(stage):
+        bar_list[i] = '='
+    bar_str = "程序执行中：[" + "".join(bar_list) + "]"
+    return bar_str
 
 
 def predict(message, history):
@@ -118,10 +149,18 @@ def predict(message, history):
     history_openai_format.append({"role": "user", "content": prompt})
     response = call_chatbot(history_openai_format)
     partial_message = ""
-    for chunk in response:
+    
+    for i, chunk in enumerate(response):
         if chunk.choices[0].delta.content is not None:
-              partial_message = partial_message + chunk.choices[0].delta.content
-              yield partial_message
+            partial_message = partial_message + chunk.choices[0].delta.content
+            # if is_code_prefix(partial_message):
+            #     continue
+            # elif is_code(partial_message):
+            #     yield get_process_bar(i // 5)
+            # else:
+            #     yield partial_message
+            yield partial_message
+
     exec_result = check_and_execute_action_code(partial_message)
     if exec_result is not None:
         predict_result = predict(exec_result, history + [(prompt, partial_message),])

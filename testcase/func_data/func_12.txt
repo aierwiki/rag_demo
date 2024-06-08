@@ -1,0 +1,24 @@
+
+
+    - query_deposit_rate_data
+        - 接口功能
+            - 获取存款利率，可以通过参数设置获取对应起止日期的数据。
+        - 接口定义：def query_deposit_rate_data(start_date:str="", end_date:str="") -> pd.DataFrame
+        - 参数说明
+            - start_date：开始日期，格式YYYY-MM-DD，发布日期在这个范围内，此参数可以为空；
+            - end_date：结束日期，格式YYYY-MM-DD，发布日期在这个范围内，此参数可以为空。
+        - 返回值
+            - 返回值类型为pandas的DataFrame类型，DataFrame中的列如下：
+            |参数名称                         |参数描述                 |
+            |-----------------------------------|----------------------|
+            |pubDate                           |发布日期               |
+            |demandDepositRate                |活期存款利率           |
+            |fixedDepositRate3Month           |定期存款利率(三个月)   |
+            |fixedDepositRate6Month           |定期存款利率(半年)     |
+            |fixedDepositRate1Year            |定期存款利率(一年)     |
+            |fixedDepositRate2Year            |定期存款利率(二年)     |
+            |fixedDepositRate3Year            |定期存款利率(三年)     |
+            |fixedDepositRate5Year            |定期存款利率(五年)     |
+            |installmentFixedDepositRate1Year |零存整取、整存零取、存本取息定期存款利率(一年)|
+            |installmentFixedDepositRate3Year |零存整取、整存零取、存本取息定期存款利率(三年)|
+            |installmentFixedDepositRate5Year |零存整取、整存零取、存本取息定期存款利率(五年)|

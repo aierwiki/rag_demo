@@ -1,0 +1,22 @@
+
+
+    - query_shibor_data
+        - 接口功能
+            - 获取银行间同业拆放利率信息，可以根据起止日期参数查询特定时间段的数据
+        - 接口定义：def query_shibor_data(start_date:str = None, end_date:str = None) -> pd.DataFrame
+        - 参数说明
+            - start_date：开始日期，格式YYYY-MM-DD，发布日期在这个范围内，此参数可以为空；
+            - end_date：结束日期，格式YYYY-MM-DD，发布日期在这个范围内，此参数可以为空。
+        - 返回值
+            - 返回值类型为pandas的DataFrame类型，DataFrame中的列如下：
+            |参数名称      |参数描述      |
+            |-------------|-------------|
+            |date         |日期         |
+            |shiborON     |隔夜拆借利率 |
+            |shibor1W     |1周拆放利率  |
+            |shibor2W     |2周拆放利率  |
+            |shibor1M     |1个月拆放利率|
+            |shibor3M     |3个月拆放利率|
+            |shibor6M     |6个月拆放利率|
+            |shibor9M     |9个月拆放利率|
+            |shibor1Y     |1年拆放利率  |

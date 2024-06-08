@@ -1,0 +1,20 @@
+
+
+    - query_money_supply_data_year
+        - 接口功能
+            - 获取货币供应量(年底余额)信息，可以根据起止日期参数查询特定时间段的数据
+        - 接口定义：def query_money_supply_data_year(start_date:str = None, end_date:str = None) -> pd.DataFrame
+        - 参数说明
+            - start_date：开始日期，格式YYYY，年份在范围内，此参数可以为空；
+            - end_date：结束日期，格式YYYY，年份在范围内，此参数可以为空。
+        - 返回值
+            - 返回值类型为pandas的DataFrame类型，DataFrame中的列如下：
+            |参数名称               |参数描述               |
+            |--------------------|---------------------|
+            |statYear            |统计年度              |
+            |m0Year              |年货币供应量M0（亿元）|
+            |m0YearYOY           |年货币供应量M0（同比）|
+            |m1Year              |年货币供应量M1（亿元）|
+            |m1YearYOY           |年货币供应量M1（同比）|
+            |m2Year              |年货币供应量M2（亿元）|
+            |m2YearYOY           |年货币供应量M2（同比）|

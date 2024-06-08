@@ -1,0 +1,26 @@
+
+    - query_dividend_data
+        - 获取除权除息信息数据（预披露、预案、正式都已通过）
+        - 接口定义：def query_dividend_data(code:str, year:str=None, yearType:str="report") -> pd.DataFrame
+        - 参数说明
+            - code：股票代码，sh或sz.+6位数字代码，或者指数代码，如：sh.601398。sh：上海；sz：深圳。此参数不可为空；
+            - year：年份，如：2017。此参数不可为空；
+            - yearType：年份类别，默认为"report":预案公告年份，可选项"operate":除权除息年份。此参数不可为空。
+        - 返回值
+            - 返回值类型为pandas的DataFrame类型，DataFrame中的列如下：
+            | 参数名称       | 参数描述             | 算法说明 |
+            |---------------|----------------------|----------|
+            | code          | 证券代码             |          |
+            | dividPreNoticeDate | 预批露公告日       |          |
+            | dividAgmPumDate | 股东大会公告日期     |          |
+            | dividPlanAnnounceDate | 预案公告日     |          |
+            | dividPlanDate  | 分红实施公告日       |          |
+            | dividRegistDate | 股权登记告日         |          |
+            | dividOperateDate | 除权除息日期       |          |
+            | dividPayDate   | 派息日               |          |
+            | dividStockMarketDate | 红股上市交易日 |          |
+            | dividCashPsBeforeTax | 每股股利税前     | 派息比例分子(税前)/派息比例分母 |
+            | dividCashPsAfterTax | 每股股利税后     | 派息比例分子(税后)/派息比例分母 |
+            | dividStocksPs  | 每股红股             |             |
+            | dividCashStock | 分红送转             | 每股派息数(税前)+每股送股数+每股转增股本数 |
+            | dividReserveToStockPs | 每股转增资本 |          |

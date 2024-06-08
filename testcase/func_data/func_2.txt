@@ -1,0 +1,18 @@
+
+    - query_adjust_factor
+        - 接口功能
+            - 取复权因子信息数据，提供的是涨跌幅复权算法复权因子
+        - 接口定义：def query_adjust_factor(code:str, start_date:str=None, end_date:str=None) -> pd.DataFrame
+        - 参数说明
+            - code：股票代码，sh或sz.+6位数字代码，或者指数代码，如：sh.601398。sh：上海；sz：深圳。此参数不可为空；
+            - start_date：开始日期，为空时默认为2015-01-01，包含此日期；
+            - end_date：结束日期，为空时默认当前日期，包含此日期。
+        - 返回值
+            - 返回值类型为pandas的DataFrame类型，DataFrame中的列如下：
+            |参数名称	|参数描述	|算法说明|
+            |---|---|---|
+            |code	|证券代码|	
+            |dividOperateDate	|除权除息日期|	
+            |foreAdjustFactor	|向前复权因子	|除权除息日前一个交易日的收盘价/除权除息日最近的一个交易日的前收盘价
+            |backAdjustFactor	|向后复权因子	|除权除息日最近的一个交易日的前收盘价/除权除息日前一个交易日的收盘价
+            |adjustFactor	|本次复权因子|

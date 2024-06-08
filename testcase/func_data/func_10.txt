@@ -1,0 +1,21 @@
+
+
+    - query_forecast_report
+        - 接口功能
+            - 获取季频公司业绩预告信息，可以通过参数设置获取起止年份数据，提供2003年至今数据。除几种特殊情况外，交易所未要求必须发布。
+        - 接口定义：def query_forecast_report(code:str, start_date:str=None, end_date:str=None) -> pd.DataFrame
+        - 参数说明
+            - code：股票代码，sh或sz.+6位数字代码，或者指数代码，如：sh.601398。sh：上海；sz：深圳。此参数不可为空；
+            - start_date：开始日期，发布日期或更新日期在这个范围内；
+            - end_date：结束日期，发布日期或更新日期在这个范围内。
+        - 返回值
+            - 返回值类型为pandas的DataFrame类型，DataFrame中的列如下：
+            |参数名称				|参数描述					|
+            |---|-------------------|
+            |code					|证券代码					|
+            |profitForcastExpPubDate	|业绩预告发布日期			|
+            |profitForcastExpStatDate|业绩预告统计日期			|
+            |profitForcastType		|业绩预告类型				|
+            |profitForcastAbstract	|业绩预告摘要				|
+            |profitForcastChgPctUp	|预告归属于母公司的净利润增长上限(%)|
+            |profitForcastChgPctDwn|预告归属于母公司的净利润增长下限(%)|

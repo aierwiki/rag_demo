@@ -1,0 +1,24 @@
+
+
+    - query_cash_flow_data
+        - 接口功能
+            - 获取季频现金流量信息，可以通过参数设置获取对应年份、季度数据，提供2007年至今数据。
+        - 接口定义：def query_cash_flow_data(code:str, year:str=None, quarter:str=None) -> pd.DataFrame
+        - 参数说明
+            - code：股票代码，sh或sz.+6位数字代码，或者指数代码，如：sh.601398。sh：上海；sz：深圳。此参数不可为空；
+            - year：统计年份，为空时默认当前年；
+            - quarter：统计季度，为空时默认当前季度。不为空时只有4个取值：1，2，3，4。
+        - 返回值
+            - 返回值类型为pandas的DataFrame类型，DataFrame中的列如下：
+            |参数名称	|参数描述	|算法说明|
+            |---|---|---|
+            |code	|证券代码	|
+            |pubDate	|公司发布财报的日期	|
+            |statDate	|财报统计的季度的最后一天，比如2017-03-31, 2017-06-30	|
+            |CAToAsset	|流动资产比率	|流动资产除以总资产|
+            |NCAToAsset	|非流动资产比率	|非流动资产除以总资产|
+            |tangibleAssetToAsset	|有形资产比率	|有形资产除以总资产|
+            |ebitToInterest	|已获利息倍数	|息税前利润/利息费用|
+            |CFOToOR	|经营活动产生的现金流量净额与营业收入之比	|经营活动产生的现金流量净额除以营业收入|
+            |CFOToNP	|经营性现金净流量与净利润之比	|经营性现金净流量除以净利润|
+            |CFOToGr	|经营性现金净流量与营业总收入之比	|经营性现金净流量除以营业总收入|

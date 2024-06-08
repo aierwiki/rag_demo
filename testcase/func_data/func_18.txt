@@ -1,0 +1,17 @@
+
+
+    - query_stock_industry
+        - 接口功能
+            - 获取行业分类信息，该信息每周一进行更新
+        - 接口定义：def query_stock_industry(date:str = None) -> pd.DataFrame
+        - 参数说明
+            - date：查询日期，格式YYYY-MM-DD，为空时默认为最新日期。
+        - 返回值
+            - 返回值类型为pandas的DataFrame类型，DataFrame中的列如下：
+            |参数名称             |参数描述         |
+            |-------------------|----------------|
+            |updateDate          |更新日期         |
+            |code                |证券代码         |
+            |code_name           |证券名称         |
+            |industry            |所属行业         |
+            |industryClassification|所属行业类别   |

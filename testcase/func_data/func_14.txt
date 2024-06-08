@@ -1,0 +1,20 @@
+
+
+    - query_required_reserve_ratio_data
+        - 接口功能
+            - 获取存款准备金率信息，可以根据起止日期参数查询特定时间段的数据
+        - 接口定义：def query_required_reserve_ratio_data(start_date="", end_date="", yearType="0")-> pd.DataFrame
+        - 参数说明
+            - start_date：开始日期，格式YYYY-MM-DD，发布日期在这个范围内，此参数可以为空；
+            - end_date：结束日期，格式YYYY-MM-DD，发布日期在这个范围内，此参数可以为空；
+            - yearType：年份类别，默认为0，查询公告日期；当设置为1时，查询生效日期。
+        - 返回值
+            - 返回值类型为pandas的DataFrame类型，DataFrame中的列如下：
+            |参数名称                         |参数描述                                       |
+            |-----------------------------------|---------------------------------------------|
+            |pubDate                           |公告日期                                     |
+            |effectiveDate                     |生效日期                                     |
+            |bigInstitutionsRatioPre           |人民币存款准备金率：大型存款类金融机构 调整前|
+            |bigInstitutionsRatioAfter         |人民币存款准备金率：大型存款类金融机构 调整后|
+            |mediumInstitutionsRatioPre        |人民币存款准备金率：中小型存款类金融机构 调整前|
+            |mediumInstitutionsRatioAfter      |人民币存款准备金率：中小型存款类金融机构 调整后|
